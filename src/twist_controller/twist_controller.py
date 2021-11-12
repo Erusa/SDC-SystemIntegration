@@ -1,4 +1,7 @@
 import rospy
+from yaw_controller import YawController
+from pid import PID
+from lowpass import LowPassFilter
 
 GAS_DENSITY = 2.858
 ONE_MPH = 0.44704
@@ -41,7 +44,7 @@ class Controller(object):
         current_vel = self.vel_lpf.filt(current_vel)
         
         #rospy.logwarn("Angular vel: {0}".format(angular_vel)
-        #ropsy.logwarn("Target velocity: {0}".format(linear_vel))
+        #rospy.logwarn("Target velocity: {0}".format(linear_vel))
         #rospy.logwarn("Target angular velocity: {0}\n".format(angular_vel))
         #rospy.logwarn("Current velocity: {0}".format(curret_vel))
         #rospy.logwarn("Filtered velocity: {0}.format(self.vel_lpf.get()))
@@ -51,7 +54,7 @@ class Controller(object):
         vel_error = linear_vel - current_vel
         self.last_vel = current_vel
         
-        current_time = ropsy.get_time()
+        current_time = rospy.get_time()
         sample_time = current_time - self.last_time
         self.last_time = current_time
         
